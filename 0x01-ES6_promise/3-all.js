@@ -1,7 +1,7 @@
 import { uploadPhoto, createUser } from './utils';
 
 export default function handleProfileSignup() {
-  Promise.all([uploadPhoto(), createUser()])
+  return Promise.all([uploadPhoto(), createUser()])
     .then((result) => {
       console.log(
         result[0].body,
@@ -9,7 +9,7 @@ export default function handleProfileSignup() {
         result[1].lastName,
       );
     })
-    .catch((error) => { // eslint-disable-line no-unused-vars
+    .catch(() => { // eslint-disable-line no-unused-vars
       console.log('Signup system offline');
     });
 }
