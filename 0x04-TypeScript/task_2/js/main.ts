@@ -69,3 +69,14 @@ function executeWork(employee: Director | Teacher) : string {
 // Test
 console.log(executeWork(createEmployee(200)));
 console.log(executeWork(createEmployee(1000)));
+
+
+type Subjects = 'Math' | 'History';
+
+function teachClass(todayClass: Subjects) : string {
+  return (todayClass === 'Math') ? 'Teaching Math' : 'Teaching History';
+}
+
+// Test
+console.log(teachClass('Math'));
+console.log(teachClass('History'));
