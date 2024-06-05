@@ -48,7 +48,7 @@ const director1: Directors = {
 
 console.log(director1);
 
-interface printTeacherFunction {
+interface PrintTeacherFunction {
   (firstName: string, lastName: string): string;
 }
 
@@ -58,8 +58,49 @@ interface printTeacherFunction {
  * @param {string} lastName - The last name of the teacher.
  * @returns {string} The formatted name of the teacher.
  */
-const printTeacher: printTeacherFunction = function (firstName: string, lastName: string): string {
+const printTeacher: PrintTeacherFunction = function (firstName: string, lastName: string): string {
   return `${firstName[0]}. ${lastName}`;
 }
 
+interface StudentInterface {
+  firstName: string;
+  lastName: string;
+  workOnHomework(): string;
+  displayName(): string;
+}
+
 console.log(printTeacher("John", "Doe"));
+
+/**
+ * Represents a StudentClass constructor.
+ */
+interface StudentConstructor {
+  new (firstName: string, lastName: string): StudentInterface;
+}
+
+/**
+ * Represents a student.
+ */
+class StudentClass implements StudentInterface {
+  firstName: string;
+  lastName: string;
+
+  constructor(firstName: string, lastName: string) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
+
+  workOnHomework(): string {
+    return 'Currently working';
+  }
+
+  displayName(): string {
+    return this.firstName;
+  }
+
+}
+
+const createStudent: StudentConstructor = StudentClass;
+
+const student = new createStudent('Mohammad', 'Ali');
+console.log(student.displayName());
