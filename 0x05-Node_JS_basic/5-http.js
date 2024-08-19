@@ -43,15 +43,14 @@ const app = createServer((req, res) => {
   if (req.url === '/students') {
     const path = process.argv[2];
 
-    res.write('This is the list of our students\n');
-
     countStudents(path)
       .then((data) => {
+        res.write('This is the list of our students\n');
         res.end(data.slice(0, -1));
       })
-      .catch((error) => {
+      .catch(() => {
         res.statusCode = 404;
-        res.end(error);
+        res.end('Cannot load the database');
       });
   }
 });
