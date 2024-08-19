@@ -22,7 +22,7 @@ function countStudents(path) {
       console.log(`Number of students in ${field}: ${info.count}. List: ${info.names.join(', ')}`);
     });
   } catch (error) {
-    console.error('Cannot load the database');
+    throw Error('Cannot load the database');
   }
 }
 
