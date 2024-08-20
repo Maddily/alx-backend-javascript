@@ -55,6 +55,6 @@ const app = createServer((req, res) => {
   }
 });
 
-app.listen(port, hostname);
+app.listen(port, hostname, () => console.log('Server listening on port 1245'));
 
 module.exports = app;
