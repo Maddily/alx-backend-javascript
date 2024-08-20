@@ -38,15 +38,15 @@ const port = 1245;
 const path = process.argv[2];
 
 app.get('/', (req, res) => res.send('Hello Holberton School!'));
-app.get('/students', (req, res) => {
-  countStudents(path)
-    .then((data) => {
-      res.send(`This is the list of our students\n${data.slice(0, -1)}`);
-    })
-    .catch(() => {
-      res.statusCode = 404;
-      res.send('Cannot load the database');
-    });
+
+app.get('/students', async (req, res) => {
+  try {
+    const data = await countStudents(path);
+    res.setHeader('Content-Type', 'text/plain');
+    res.send(`This is the list of our students\n${data.slice(0, -1)}`);
+  } catch (error) {
+    res.status(500).send('Cannot load the database');
+  }
 });
 
 app.listen(port);
