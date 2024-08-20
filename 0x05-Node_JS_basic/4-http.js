@@ -9,6 +9,6 @@ const app = createServer((req, res) => {
   res.end('Hello Holberton School!');
 });
 
-app.listen(port, hostname);
+app.listen(port, hostname, () => console.log('Server listening on port 1245'));
 
 module.exports = app;
