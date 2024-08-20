@@ -1,33 +1,36 @@
 const express = require('express');
-const fs = require('fs').promises;
+const fs = require('fs');
 
-async function countStudents(path) {
-  try {
-    const data = await fs.readFile(path, { encoding: 'utf8' });
-
-    const students = data.trim().split('\n').map((line) => line.split(','));
-    students.shift();
-
-    let studentData = `Number of students: ${students.length}\n`;
-
-    const fields = students.reduce((acc, student) => {
-      const field = student[3];
-      if (!acc[field]) {
-        acc[field] = { count: 0, names: [] };
+function countStudents(path) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(path, 'utf-8', (error, data) => {
+      if (error) {
+        reject(Error('Cannot load the database'));
+        return;
       }
-      acc[field].count += 1;
-      acc[field].names.push(student[0]);
-      return acc;
-    }, {});
 
-    Object.entries(fields).forEach(([field, info]) => {
-      studentData += `Number of students in ${field}: ${info.count}. List: ${info.names.join(', ')}\n`;
+      const students = data.trim().split('\n').map((line) => line.split(','));
+      students.shift();
+
+      let studentData = `Number of students: ${students.length}\n`;
+
+      const fields = students.reduce((acc, student) => {
+        const field = student[3];
+        if (!acc[field]) {
+          acc[field] = { count: 0, names: [] };
+        }
+        acc[field].count += 1;
+        acc[field].names.push(student[0]);
+        return acc;
+      }, {});
+
+      Object.entries(fields).forEach(([field, info]) => {
+        studentData += `Number of students in ${field}: ${info.count}. List: ${info.names.join(', ')}\n`;
+      });
+
+      resolve(studentData);
     });
-
-    return studentData;
-  } catch (error) {
-    throw Error('Cannot load the database');
-  }
+  });
 }
 
 const app = express();
