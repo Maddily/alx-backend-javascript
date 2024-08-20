@@ -1,9 +1,9 @@
 const { createServer } = require('http');
-const fs = require('fs/promises');
+const fs = require('fs').promises;
 
 async function countStudents(path) {
   try {
-    const data = await fs.readFile(path, { encoding: 'utf8' });
+    const data = await fs.readFile(path, 'utf8');
 
     const students = data.trim().split('\n').map((line) => line.split(','));
     students.shift();
