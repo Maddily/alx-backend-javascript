@@ -1,5 +1,5 @@
-const { createServer } = require('node:http');
-const fs = require('node:fs/promises');
+const { createServer } = require('http');
+const fs = require('fs/promises');
 
 async function countStudents(path) {
   try {
